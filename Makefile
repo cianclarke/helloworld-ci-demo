@@ -4,10 +4,9 @@ NODEPATH = `pwd`/cloud:`pwd`/shared
 NODEPATH_COVERAGE = `pwd`/cloud-cov:`pwd`/shared
 REPORTER = dot
 
-all: clean deps test-cov
+all: clean deps 
 
 test: cloudtest 
-test-cov: cloudtest-cov
 
 cloudtest:
 	@env NODE_PATH=$(NODEPATH) ./node_modules/.bin/mocha \
@@ -26,11 +25,6 @@ deps:
 	cd cloud; npm install .
 	npm install . 
 
-cloudtest-cov: cloud-cov
-	@$(MAKE) test REPORTER=html-cov NODEPATH=$(NODEPATH_COVERAGE) > cloudcoverage.html
-
-cloud-cov:
-	@jscoverage --no-instrument=node_modules cloud $@
 
 clean: 
 	rm -rf cloud-cov
